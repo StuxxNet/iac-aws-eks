@@ -19,3 +19,9 @@ variable "eks_version" {
   type        = string
   default     = "1.25"
 }
+
+variable "workload_nodegroup_flavors" {
+  description = "Flavor of of the nodes that composes the nodegroup"
+  type        = list(string)
+  default     = ["t3.medium", "t3.small", "t3.micro"]
+}
