@@ -4,7 +4,7 @@ variable "name" {
   default     = "devops"
 }
 
-variable "subnets" {
+variable "private_subnets" {
   description = "List of subnets where cluster will spin it's nodes"
   type        = list(string)
   default = [
@@ -23,5 +23,5 @@ variable "eks_version" {
 variable "workload_nodegroup_flavors" {
   description = "Flavor of of the nodes that composes the nodegroup"
   type        = list(string)
-  default     = ["t3.medium", "t3.small", "t3.micro"]
+  default     = ["t3.large", "t3.xlarge"]
 }
