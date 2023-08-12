@@ -1,4 +1,4 @@
-resource "aws_eks_cluster" "this" {
+resource "aws_eks_cluster" "cluster" {
   name = format("%s-eks", var.name)
 
   version = var.eks_version

@@ -1,6 +1,6 @@
 resource "kubernetes_config_map" "aws_auth" {
   metadata {
-    name = "aws-auth"
+    name      = "aws-auth"
     namespace = "kube-system"
   }
 
@@ -18,8 +18,4 @@ resource "kubernetes_config_map" "aws_auth" {
   - system:masters
 YAML
   }
-
-  depends_on = [
-    aws_eks_node_group.this
-  ]
 }

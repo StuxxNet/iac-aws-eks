@@ -4,6 +4,12 @@ variable "name" {
   default     = "devops"
 }
 
+variable "vpc_id" {
+  description = "VPC"
+  type        = string
+  default     = "vpc-0d7ee178466caab08"
+}
+
 variable "private_subnets" {
   description = "List of subnets where cluster will spin it's nodes"
   type        = list(string)
