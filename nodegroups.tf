@@ -19,7 +19,7 @@ resource "aws_eks_node_group" "nodes" {
 
   launch_template {
     id      = aws_launch_template.nodes.id
-    version = "$Latest"
+    version = aws_launch_template.nodes.latest_version
   }
 
   lifecycle {
