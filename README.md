@@ -9,6 +9,7 @@
 - [ ] Add a new nodegroup for ingress and taint to reserve the instances
 - [ ] Add test cluster auto-scaler
 - [ ] Enhance auth_config to be able to receive multiple roles
+- [ ] Include tests with terratest
 - [ ] Make it a module and move the provider configuration to the readme to explain how to use the module
 
 ## Requirements
