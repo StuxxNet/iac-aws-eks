@@ -1,9 +1,9 @@
 resource "helm_release" "nginx_ingress_controller" {
-  name             = "nginx-ingress-controller"
-  namespace        = "kube-system"
-  repository       = "https://kubernetes.github.io/ingress-nginx"
-  chart            = "ingress-nginx"
-  version          = "4.2.3"
+  name       = "nginx-ingress-controller"
+  namespace  = "kube-system"
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
+  version    = "4.2.3"
 
   set {
     name  = "controller.service.type"

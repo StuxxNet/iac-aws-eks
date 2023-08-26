@@ -1,4 +1,11 @@
 terraform {
+  cloud {
+    organization = "devops-tryouts"
+
+    workspaces {
+      name = "development"
+    }
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"

@@ -34,9 +34,11 @@ resource "helm_release" "aws_loadbalancer_controller" {
   }
 
   depends_on = [
-    kubernetes_service_account.loadbalancer_controller_service_account,
     aws_eks_addon.cni,
     aws_eks_addon.kube_proxy,
-    aws_eks_addon.core_dns
+    aws_eks_addon.core_dns,
+
+    kubernetes_service_account.loadbalancer_controller_service_account,
+    aws_iam_role_policy_attachment.loadbalancer_role_attachment
   ]
 }
