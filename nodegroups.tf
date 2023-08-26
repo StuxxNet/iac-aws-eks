@@ -17,11 +17,6 @@ resource "aws_eks_node_group" "nodes" {
 
   instance_types = var.workload_nodegroup_flavors
 
-  launch_template {
-    id      = aws_launch_template.nodes.id
-    version = aws_launch_template.nodes.latest_version
-  }
-
   lifecycle {
     ignore_changes = [
       scaling_config[0].desired_size
@@ -33,7 +28,6 @@ resource "aws_eks_node_group" "nodes" {
     aws_iam_role_policy_attachment.nodegroups_role_attachment_AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.nodegroups_role_attachment_AmazonEC2ContainerRegistryReadOnly,
 
-    aws_launch_template.nodes,
     kubernetes_config_map.aws_auth
   ]
 }

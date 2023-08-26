@@ -1,13 +1,3 @@
-resource "aws_security_group" "loadbalancer_sg" {
-  name        = format("%s-loadbalancer-controller-sg", var.name)
-  description = "Security Group attached to the loadbalancer"
-  vpc_id      = var.vpc_id
-
-  tags = {
-    format("kubernetes.io/cluster/%s", var.name) : "owned"
-  }
-}
-
 resource "kubernetes_service_account" "loadbalancer_controller_service_account" {
   metadata {
     name      = "aws-load-balancer-controller"
