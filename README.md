@@ -2,12 +2,12 @@
 
 ## ToDos
 
-- [ ] Review the ingress loadbalancer creation: Make it external and NLB
+- [X] Review the ingress loadbalancer creation: Make it external and NLB
+- [ ] Add test cluster auto-scaler
 - [ ] Add tags to all the resources
 - [ ] Add variables for hard-coded content
 - [ ] Refactor repetitive code sections to use inline loops (addons, node-groups)
 - [ ] Add a new nodegroup for ingress and taint to reserve the instances
-- [ ] Add test cluster auto-scaler
 - [ ] Enhance auth_config to be able to receive multiple roles
 - [ ] Include tests with terratest
 - [ ] Make it a module and move the provider configuration to the readme to explain how to use the module
