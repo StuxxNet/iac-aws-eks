@@ -11,7 +11,7 @@ resource "helm_release" "nginx_ingress_controller" {
   }
 
   set {
-    name = "controller.replicaCount"
+    name  = "controller.replicaCount"
     value = 3
   }
 

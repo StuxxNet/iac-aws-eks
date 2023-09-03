@@ -3,7 +3,7 @@
 ## ToDos
 
 - [X] Review the ingress loadbalancer creation: Make it external and NLB
-- [ ] Add test cluster auto-scaler
+- [X] Add test cluster auto-scaler
 - [ ] Add tags to all the resources
 - [ ] Add variables for hard-coded content
 - [ ] Refactor repetitive code sections to use inline loops (addons, node-groups)
