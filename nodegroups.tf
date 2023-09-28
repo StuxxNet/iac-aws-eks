@@ -6,8 +6,8 @@ resource "aws_eks_node_group" "nodes" {
   subnet_ids = var.private_subnets
 
   scaling_config {
-    desired_size = 3
     max_size     = 4
+    desired_size = 3
     min_size     = 2
   }
 
@@ -21,6 +21,11 @@ resource "aws_eks_node_group" "nodes" {
     ignore_changes = [
       scaling_config[0].desired_size
     ]
+  }
+
+  tags = {
+    "k8s.io/cluster-autoscaler/enabled"                  = "true",
+    format("k8s.io/cluster-autoscaler/%s-eks", var.name) = "true"
   }
 
   depends_on = [
