@@ -1,17 +1,3 @@
-# Terraform EKS Module
-
-## ToDos
-
-- [X] Review the ingress loadbalancer creation: Make it external and NLB
-- [X] Add test cluster auto-scaler
-- [ ] Add tags to all the resources
-- [ ] Add variables for hard-coded content
-- [ ] Refactor repetitive code sections to use inline loops (addons, node-groups)
-- [ ] Add a new nodegroup for ingress and taint to reserve the instances
-- [ ] Enhance auth_config to be able to receive multiple roles
-- [ ] Include tests with terratest
-- [ ] Make it a module and move the provider configuration to the readme to explain how to use the module
-
 ## Requirements
 
 | Name | Version |
@@ -27,7 +13,7 @@
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 5.10.0 |
 | <a name="provider_helm"></a> [helm](#provider\_helm) | 2.11.0 |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.22.0 |
-| <a name="provider_tls"></a> [tls](#provider\_tls) | n/a |
+| <a name="provider_tls"></a> [tls](#provider\_tls) | 4.0.4 |
 
 ## Modules
 
@@ -46,11 +32,16 @@ No modules.
 | [aws_eks_node_group.nodes](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/eks_node_group) | resource |
 | [aws_iam_openid_connect_provider.oidc](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_openid_connect_provider) | resource |
 | [aws_iam_policy.aws_loadbalancer_controller_policy](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.ebs_csi_driver_policy](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.eks_cluster_autoscaler_policy](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_policy) | resource |
 | [aws_iam_role.controlplane_role](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role) | resource |
+| [aws_iam_role.eks_cluster_autoscaler_role](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role) | resource |
 | [aws_iam_role.loadbalancer_controller_role](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role) | resource |
 | [aws_iam_role.nodegroups_role](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.autoscaler_role_attachment](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.controlplane_role_attachment_AmazonEKSClusterPolicy](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.controlplane_role_attachment_AmazonEKSVPCResourceController](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.ebs_csi_driver_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.loadbalancer_role_attachment](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.nodegroups_role_attachment_AmazonEC2ContainerRegistryReadOnly](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.nodegroups_role_attachment_AmazonEKSWorkerNodePolicy](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/iam_role_policy_attachment) | resource |
@@ -58,13 +49,17 @@ No modules.
 | [aws_kms_alias.eks_secrets_encryption_alias](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/kms_alias) | resource |
 | [aws_kms_key.eks_secrets_encryption](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/resources/kms_key) | resource |
 | [helm_release.aws_loadbalancer_controller](https://registry.terraform.io/providers/hashicorp/helm/2.11.0/docs/resources/release) | resource |
+| [helm_release.cluster_autoscaler](https://registry.terraform.io/providers/hashicorp/helm/2.11.0/docs/resources/release) | resource |
+| [helm_release.kubernetes_metrics_server](https://registry.terraform.io/providers/hashicorp/helm/2.11.0/docs/resources/release) | resource |
 | [helm_release.nginx_ingress_controller](https://registry.terraform.io/providers/hashicorp/helm/2.11.0/docs/resources/release) | resource |
 | [kubernetes_config_map.aws_auth](https://registry.terraform.io/providers/hashicorp/kubernetes/2.22.0/docs/resources/config_map) | resource |
 | [kubernetes_service_account.loadbalancer_controller_service_account](https://registry.terraform.io/providers/hashicorp/kubernetes/2.22.0/docs/resources/service_account) | resource |
 | [aws_eks_cluster_auth.this](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/data-sources/eks_cluster_auth) | data source |
 | [aws_iam_policy_document.assume_role](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.aws_load_balancer_controller_assume_role](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.eks_cluster_autoscaler_assume_role](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.nodegroups_assume_role](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/data-sources/iam_policy_document) | data source |
+| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/5.10.0/docs/data-sources/region) | data source |
 | [tls_certificate.this](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/data-sources/certificate) | data source |
 
 ## Inputs
